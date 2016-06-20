@@ -85,16 +85,17 @@ def filter_domains(tg_iocs,alexalist):
 		tg_iocs - list of json objects containing IOC information for today
 		alexalist - dictionary of top alexa domains with their rank
 	Returns:
-		tg_iocs - returns a new filtered list of json objects, omitting anything with a domain matching alexa list
+		filtered - returns a new filtered list of json objects, omitting anything with a domain matching alexa list
 	'''
+	filtered = list()
 	for ioc in tg_iocs:
 		domain = get_tld(ioc['domain'])
-
 		if domain in alexalist.keys():
 			print("[+] Match! : %s Ranked: %s" % (domain,alexalist[domain]))
-			tg_iocs.remove(ioc)
+		else:
+			filtered.append(ioc)
 
-	return tg_iocs
+	return filtered
 
 def write_iocs(tg_iocs):
 	try:

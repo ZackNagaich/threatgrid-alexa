@@ -100,7 +100,7 @@ def write_iocs(tg_iocs):
 	try:
 		fp = open("filtered_ioc.csv","w")
 		for ioc in tg_iocs:
-			fp.write("%s\n" % ioc)
+			fp.write("%s\n" % json.dumps(ioc,indent=4))
 	except:
 		print("[!] Failed to write filtered_ioc.csv\n")
 

@@ -11,7 +11,7 @@ import json
 def get_alexalist(top):
 		''' Reads whitelist from top-1m.csv. If this fails, it fetches this list on Amazon.
 		Args:
-			None.
+			top - limit to how many top X alexa sites to return.
 		Returns:
 			domains - a dictionary of domains and rankings from whitelist.
 		'''
@@ -65,11 +65,11 @@ def get_tld(domain):
 
 
 def get_tg_domain_feed(options):
-	''' Searches ThreatGrid for domains  and strips out related URLs found in the analysis.
+	''' Gets IOC domain feed for today.
 	Args:
-		checksum - hash value to search threatgrid for.
+		options - hash value to search threatgrid for, contains apikey and time limit for today
 	Returns:
-		urls - A set of URLs obtained from ThreatGrid Sample Analysis	.
+		tg_iocs - list of json objects representing ioc events
 	'''
 	tg_iocs = list()
 	for resp in domains(options):
@@ -122,6 +122,7 @@ def main():
 	except:
 		top = 1000000
 
+	print("[+] Querying ThreatGrid API...\n")
 	tg_iocs = get_tg_domain_feed(options)
 	before = len(tg_iocs)
 	alexa = get_alexalist(top)
